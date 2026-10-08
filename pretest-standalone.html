@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Test — Introduction to AI for Developers (Standalone)</title>
+<style>
+  :root {
+    --accent: #ea580c; --accent-hover: #ff6b1a; --bg: #faf7f2; --card: #ffffff;
+    --border: #e8e3da; --body: #444; --muted: #888; --light: #1a1a1a;
+    --green: #16a34a; --red: #dc2626; --yellow: #d97706;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--light);
+    font-family: "Segoe UI", "Noto Sans Thai", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.7;
+  }
+  .site-header {
+    background: linear-gradient(135deg, #ea580c, #c2410c);
+    color: #fff; text-align: center; padding: 36px 20px 28px;
+  }
+  .site-header h1 { margin: 0 0 4px; font-size: 2em; }
+  .site-header p { margin: 0; opacity: 0.9; }
+  main { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+  .site-footer {
+    text-align: center; color: var(--muted); font-size: 0.85em;
+    padding: 20px; border-top: 1px solid var(--border);
+  }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 24px 26px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .card h2 { margin-top: 0; }
+  label.field-label { display: block; font-weight: 600; margin: 14px 0 6px; }
+  input[type="text"] {
+    width: 100%; max-width: 420px; padding: 10px 14px; font-size: 1em;
+    border: 1px solid var(--border); border-radius: 8px; font-family: inherit;
+  }
+  input[type="text"]:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
+  button {
+    display: inline-block; background: var(--accent); color: #fff; border: none;
+    border-radius: 8px; padding: 11px 26px; font-size: 1em; font-family: inherit;
+    cursor: pointer; transition: background 0.15s;
+  }
+  button:hover { background: var(--accent-hover); }
+  button.secondary { background: #fff; color: var(--body); border: 1px solid var(--border); }
+  button.secondary:hover { background: #f5f2ec; }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .question {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 20px 24px; margin-bottom: 16px;
+  }
+  .question .q-num { color: var(--accent); font-weight: 700; margin-right: 6px; }
+  .question pre {
+    background: #1e1e1e; color: #e8e8e8; border-radius: 10px;
+    padding: 14px 18px; overflow-x: auto; font-size: 0.92em;
+  }
+  .option { display: block; padding: 8px 12px; border-radius: 8px; cursor: pointer; color: var(--body); }
+  .option:hover { background: #f5f2ec; }
+  .option input { margin-right: 8px; accent-color: var(--accent); }
+  .question.correct { border-left: 5px solid var(--green); }
+  .question.wrong { border-left: 5px solid var(--red); }
+  .option.answer-right { background: #ecfdf5; color: var(--green); font-weight: 600; }
+  .option.answer-picked-wrong { background: #fef2f2; color: var(--red); font-weight: 600; }
+  .sticky-bar {
+    position: sticky; bottom: 0; background: rgba(250,247,242,0.95);
+    border-top: 1px solid var(--border); padding: 14px 0; display: flex;
+    align-items: center; gap: 16px; flex-wrap: wrap; backdrop-filter: blur(4px);
+  }
+  .progress-text { color: var(--muted); }
+  .result-banner {
+    text-align: center; padding: 30px 20px; border-radius: 14px; color: #fff; margin-bottom: 20px;
+  }
+  .result-banner .score { font-size: 3em; font-weight: 800; margin: 8px 0; }
+  .result-banner .label { font-size: 1.3em; font-weight: 700; }
+  .result-banner p { margin: 4px 0; opacity: 0.95; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.95em; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--body); }
+  th { background: #fff7ed; color: var(--light); font-weight: 700; }
+  .part-bar { height: 10px; background: #eee; border-radius: 999px; overflow: hidden; margin-top: 4px; }
+  .part-bar > div { height: 100%; background: var(--accent); }
+  .muted { color: var(--muted); }
+  @media print {
+    .site-header, .site-footer, .sticky-bar, .no-print, .review-section { display: none !important; }
+    body { background: #fff; }
+    main { padding: 0; max-width: 100%; }
+    .card, .question { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+    .result-banner { border-radius: 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    th { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Pre-Test</h1>
+    <p>Introduction to AI for Developers — แบ่งกลุ่มผู้เรียนตามระดับความรู้เดิม (25 ข้อ · 30 นาที)</p>
+  </header>
+
+  <main id="app"></main>
+
+  <footer class="site-footer">
+    เวอร์ชันไฟล์เดียว (standalone) — เปิดใช้ได้ทันทีโดยไม่ต้องมี server · ผลสอบจัดเก็บใน browser เครื่องนี้ อ้างอิงด้วย email
+  </footer>
+
+<script>
+"use strict";
+
+// ---------- ข้อสอบ Pre-Test 25 ข้อ ----------
+const PARTS = [
+  { id: 1, name: "Part 1 — Python & Programming Basics", full: 10 },
+  { id: 2, name: "Part 2 — AI Tools & Prompt Engineering", full: 8 },
+  { id: 3, name: "Part 3 — AI & GenAI Awareness", full: 7 },
+];
+
+const QUESTIONS = [
+  { n: 1, part: 1, text: "ผลลัพธ์ของโค้ดต่อไปนี้คืออะไร?", code: "x = [1, 2, 3]\nprint(x[-1])",
+    options: { a: "1", b: "-1", c: "3", d: "Error" }, answer: "c" },
+  { n: 2, part: 1, text: "ฟังก์ชัน len() ใน Python ใช้ทำอะไร?",
+    options: { a: "คำนวณผลรวมของ list", b: "นับจำนวน elements ใน object", c: "แปลง string เป็น list", d: "หาค่าสูงสุดของ list" }, answer: "b" },
+  { n: 3, part: 1, text: "ข้อใดคือวิธีสร้าง dictionary ที่ถูกต้องใน Python?",
+    options: { a: 'd = ["name": "Alice", "age": 30]', b: 'd = ("name", "Alice", "age", 30)', c: 'd = {"name": "Alice", "age": 30}', d: 'd = <"name" = "Alice", "age" = 30>' }, answer: "c" },
+  { n: 4, part: 1, text: "Loop นี้จะ print ค่าอะไรออกมา?", code: "for i in range(3):\n    print(i)",
+    options: { a: "1, 2, 3", b: "0, 1, 2, 3", c: "0, 1, 2", d: "3" }, answer: "c" },
+  { n: 5, part: 1, text: "ผลลัพธ์ของ \"hello\".upper() ใน Python คืออะไร?",
+    options: { a: "hello", b: "HELLO", c: "Hello", d: "Error" }, answer: "b" },
+  { n: 6, part: 1, text: "ข้อใดเป็นวิธีเพิ่ม element เข้าท้าย list ใน Python?",
+    options: { a: 'fruits.add("apple")', b: 'fruits.push("apple")', c: 'fruits.append("apple")', d: 'fruits.insert("apple")' }, answer: "c" },
+  { n: 7, part: 1, text: "ผลลัพธ์ของโค้ดต่อไปนี้คืออะไร?", code: "x = 7\nprint(x % 3)",
+    options: { a: "2", b: "1", c: "3", d: "2.33" }, answer: "b" },
+  { n: 8, part: 1, text: "ฟังก์ชันใดใช้แปลง string ให้เป็นตัวเลขจำนวนเต็มใน Python?",
+    options: { a: "str()", b: "float()", c: "int()", d: "num()" }, answer: "c" },
+  { n: 9, part: 1, text: "ฟังก์ชัน Python ต่อไปนี้ทำอะไร?", code: "def double(x):\n    return x * 2",
+    options: { a: "คูณ x ด้วย 2 แล้ว print", b: "รับค่า x แล้วคืนค่า x คูณ 2", c: "สร้าง list ที่มี 2 elements", d: "ตรวจสอบว่า x หารด้วย 2 ลงตัวหรือไม่" }, answer: "b" },
+  { n: 10, part: 1, text: "try...except ใน Python ใช้เพื่ออะไร?",
+    options: { a: "วนซ้ำ code หลายรอบ", b: "จัดการ error โดยไม่ให้โปรแกรม crash", c: "import library ภายนอก", d: "สร้าง class ใหม่" }, answer: "b" },
+  { n: 11, part: 2, text: "GitHub Copilot คือเครื่องมือประเภทใด?",
+    options: { a: "ระบบจัดการฐานข้อมูล", b: "โปรแกรมป้องกันไวรัส", c: "AI assistant ที่ช่วยเขียนโค้ดในตัว editor โดยตรง", d: "เครื่องมือออกแบบ UI" }, answer: "c" },
+  { n: 12, part: 2, text: "เทคนิค \"Few-shot\" ใน prompt engineering หมายถึงอะไร?",
+    options: { a: "การใส่ตัวอย่าง input-output ไว้ใน prompt เพื่อให้โมเดลเรียนรู้รูปแบบที่ต้องการ", b: "การลด parameter ของโมเดล", c: "การเทรนโมเดลด้วยข้อมูลน้อยมาก", d: "การรัน model บน hardware ที่มีหน่วยความจำน้อย" }, answer: "a" },
+  { n: 13, part: 2, text: "Cline (VS Code extension) แตกต่างจากการใช้ chatbot ผ่านเว็บบราวเซอร์อย่างไร?",
+    options: { a: "Cline ตอบได้เฉพาะภาษาอังกฤษ", b: "Chatbot บนเว็บเท่านั้นที่เข้าใจโค้ด", c: "ไม่มีความแตกต่างกันเลย", d: "Cline ทำงานอยู่ใน VS Code และสามารถอ่าน/สร้าง/แก้ไฟล์ในโปรเจกต์ได้ตรง ไม่ต้อง copy-paste ผลลัพธ์" }, answer: "d" },
+  { n: 14, part: 2, text: "AI Skill (เช่น ไฟล์ SKILL.md) แตกต่างจากการพิมพ์ prompt สั่งงานทีละครั้งอย่างไร?",
+    options: { a: "AI Skill คือ prompt ที่สั้นกว่าและใช้ token น้อยกว่า", b: "AI Skill เป็นกรอบความสามารถที่กำหนดเป้าหมาย ขั้นตอน และเงื่อนไขไว้ล่วงหน้า ให้ AI ทำงานเฉพาะทางซ้ำได้อย่างสม่ำเสมอ", c: "AI Skill คือการเทรนโมเดลใหม่ด้วยข้อมูลของตัวเอง", d: "ไม่มีความแตกต่างกัน เป็นเพียงชื่อเรียกอีกอย่างของ prompt" }, answer: "b" },
+  { n: 15, part: 2, text: "แนวคิด Spec-driven development ต่างจากการพิมพ์ prompt สั่งงานตรงๆ อย่างไร?",
+    options: { a: "Spec-driven ทำงานได้เร็วกว่าเสมอ", b: "Spec-driven ไม่ต้องใช้ AI เลย", c: "มีการเขียน spec/plan ให้ตรวจสอบได้ก่อนให้ AI ลงมือทำจริง ลดความเสี่ยงที่งานจะผิดทิศ", d: "ทั้งสองวิธีให้ผลลัพธ์เหมือนกันทุกกรณี" }, answer: "c" },
+  { n: 16, part: 2, text: "ไฟล์ instruction (เช่น CLAUDE.md) ในโปรเจกต์มีประโยชน์อย่างไร?",
+    options: { a: "เพิ่มความเร็วในการรันโปรแกรม", b: "เข้ารหัสไฟล์เพื่อความปลอดภัย", c: "ใช้แทน README เพียงอย่างเดียว", d: "บอกกฎ/convention ของโปรเจกต์ให้ AI assistant รู้ ไม่ต้องอธิบาย context ซ้ำทุกครั้ง" }, answer: "d" },
+  { n: 17, part: 2, text: "เมื่อใช้ AI assistant ช่วยเขียนโค้ด สิ่งที่ developer ควรทำเสมอคือข้อใด?",
+    options: { a: "เชื่อผลลัพธ์ทันทีโดยไม่ต้องตรวจสอบ", b: "ตรวจสอบและทดสอบโค้ดก่อนนำไปใช้จริงเสมอ", c: "ปิดการแจ้งเตือน error ทั้งหมด", d: "ใช้ผลลัพธ์แรกที่ได้เท่านั้น ห้ามขอให้แก้ไข" }, answer: "b" },
+  { n: 18, part: 2, text: "ข้อมูลประเภทใดที่ไม่ควรพิมพ์หรือให้ AI assistant เข้าถึงเด็ดขาด?",
+    options: { a: "โค้ดตัวอย่างที่เปิดเผยต่อสาธารณะอยู่แล้ว", b: "ชื่อฟังก์ชันที่ใช้ในโปรเจกต์", c: "รหัสผ่าน ข้อมูลการเงินบริษัท และข้อมูลส่วนตัวของลูกค้า", d: "ข้อความ error ทั่วไป" }, answer: "c" },
+  { n: 19, part: 3, text: "LLM ย่อมาจากอะไร?",
+    options: { a: "Low-Level Machine", b: "Large Language Model", c: "Linear Learning Method", d: "Layered Logic Module" }, answer: "b" },
+  { n: 20, part: 3, text: "Hallucination ใน context ของ AI หมายถึงอะไร?",
+    options: { a: "โมเดล AI มีปัญหาด้าน hardware", b: "โมเดลสร้างข้อมูลที่ฟังดูน่าเชื่อถือแต่ไม่เป็นความจริง", c: "โมเดลประมวลผลได้เร็วผิดปกติ", d: "การฝึกโมเดลด้วย data ที่มีภาพ" }, answer: "b" },
+  { n: 21, part: 3, text: "Prompt Engineering คืออะไร?",
+    options: { a: "การเขียนโค้ดเพื่อสร้าง AI model ใหม่", b: "การออกแบบคำถาม/คำสั่งเพื่อดึงผลลัพธ์ที่ดีที่สุดจาก AI", c: "การฝึกอบรม AI ด้วยชุดข้อมูลพิเศษ", d: "การปรับ hardware ให้รองรับ AI" }, answer: "b" },
+  { n: 22, part: 3, text: "Model Context Protocol (MCP) คืออะไร?",
+    options: { a: "library Python สำหรับเทรนโมเดลภาษา", b: "มาตรฐานเปิดสำหรับเชื่อมต่อ LLM เข้ากับข้อมูลและเครื่องมือภายนอกอย่างเป็นระบบ", c: "ภาษาโปรแกรมมิ่งใหม่สำหรับพัฒนา AI", d: "บริการ cloud สำหรับ deploy โมเดล" }, answer: "b" },
+  { n: 23, part: 3, text: "RAG (Retrieval-Augmented Generation) แก้ปัญหาอะไรของ LLM?",
+    options: { a: "ทำให้โมเดลรันเร็วขึ้น", b: "ลดขนาดของ model", c: "ช่วยให้โมเดลตอบได้จาก knowledge base ที่ update ได้ แทนการพึ่งแค่ training data", d: "แปลงข้อความเป็นภาพ" }, answer: "c" },
+  { n: 24, part: 3, text: "ข้อใดอธิบาย Agentic AI ได้ถูกต้องที่สุด?",
+    options: { a: "AI ที่สามารถแสดงอารมณ์ได้", b: "AI ที่มีขนาดเล็กและรันบนอุปกรณ์ edge", c: "AI ที่สามารถวางแผน ตัดสินใจ และใช้ tools เพื่อทำงานให้สำเร็จโดยอัตโนมัติ", d: "AI ที่ถูก train ด้วย reinforcement learning เท่านั้น" }, answer: "c" },
+  { n: 25, part: 3, text: "Fine-tuning LLM แตกต่างจาก Prompt Engineering อย่างไร?",
+    options: { a: "Fine-tuning ไม่ต้องใช้ data เพิ่มเติม", b: "Fine-tuning ปรับ weight ของโมเดลด้วย dataset ใหม่ ส่วน Prompt Engineering ปรับแค่วิธีถาม", c: "Prompt Engineering ปรับ weight ของโมเดล", d: "ทั้งสองวิธีให้ผลลัพธ์เหมือนกัน" }, answer: "b" },
+];
+
+const TOTAL = QUESTIONS.length;
+
+const COURSE_CHAPTERS = [
+  "บทที่ 1: พื้นฐาน AI สำหรับ Developer",
+  "บทที่ 2: Prompt Engineering พื้นฐานสำหรับผู้ใช้งานทั่วไป",
+  "บทที่ 3: เทคนิคและวิศวกรรมพรอมต์พื้นฐาน (Basic Prompt Engineering)",
+  "บทที่ 4: การพัฒนา AI Skill",
+  "บทที่ 5: Model Context Protocol (MCP)",
+  "บทที่ 6: Generative AI Basics",
+  "บทที่ 7: Advanced Generative AI",
+  "บทที่ 8: Agentic AI & RAG Fundamentals",
+  "บทที่ 9: Multi-Agent Systems & Automation",
+  "บทที่ 10: Capstone Project",
+];
+
+// Placement logic (ตามตารางเกณฑ์การแบ่งกลุ่มในเอกสารต้นฉบับ)
+function getPreTestGroup(total, p1, p2, p3) {
+  if (p1 < 6 || total <= 8) {
+    return { label: "Beginner", color: "#16a34a", startChapter: "บทที่ 1 (ครบทุกบท)", startChapterIndex: 1, desc: "ไม่มีพื้นฐาน Python หรือ AI — เริ่มเรียนตั้งแต่บทที่ 1" };
+  }
+  if (p1 >= 8 && p2 >= 5 && p3 >= 4 && total >= 18) {
+    return { label: "Advanced", color: "#dc2626", startChapter: "บทที่ 6 (เน้น GenAI + Agentic)", startChapterIndex: 6, desc: "รู้พื้นฐานครบทุกส่วนตามเกณฑ์ ต้องการเจาะลึก GenAI และ Agent" };
+  }
+  return { label: "Intermediate", color: "#d97706", startChapter: "บทที่ 5 (ข้ามบทที่ 1–4)", startChapterIndex: 5, desc: "รู้ Python และพื้นฐาน AI tools/prompt engineering แล้ว" };
+}
+
+// ---------- state ----------
+const STORAGE_KEY = "ai_dev_course_test_results";
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const state = { email: "", name: "", answers: {}, startTime: null, lastResult: null };
+
+const app = document.getElementById("app");
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+}
+
+function loadResults() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+}
+
+function saveResult(result) {
+  const all = loadResults();
+  all.push(result);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+}
+
+// ---------- views ----------
+
+function renderGate() {
+  const history = loadResults().filter((r) => r.email === state.email && r.testId === "pretest");
+  app.innerHTML = `
+    <div class="card" style="max-width:520px;margin:40px auto">
+      <h2>กรอกข้อมูลก่อนเริ่ม Pre-Test</h2>
+      <label class="field-label" for="gate-email">อีเมลผู้สอบ (ใช้เป็นตัวอ้างอิงเรียกประวัติ)</label>
+      <input type="text" id="gate-email" placeholder="you@example.com" value="${escapeHtml(state.email)}">
+      <label class="field-label" for="gate-name">ชื่อผู้สอบ</label>
+      <input type="text" id="gate-name" placeholder="ชื่อ-นามสกุล" value="${escapeHtml(state.name)}">
+      ${history.length ? `<p class="muted" style="margin-top:14px">พบประวัติ Pre-Test ของ email นี้ ${history.length} ครั้ง (คะแนนล่าสุด ${history[history.length - 1].total}/${history[history.length - 1].full}) — สามารถสอบซ้ำได้</p>` : ""}
+      <div class="btn-row">
+        <button id="gate-start">เริ่มสอบ (${TOTAL} ข้อ)</button>
+      </div>
+    </div>
+  `;
+  document.getElementById("gate-email").addEventListener("input", (e) => { state.email = e.target.value.trim().toLowerCase(); });
+  document.getElementById("gate-start").addEventListener("click", () => {
+    const email = document.getElementById("gate-email").value.trim().toLowerCase();
+    const name = document.getElementById("gate-name").value.trim();
+    if (!EMAIL_RE.test(email)) { alert("กรุณากรอกอีเมลผู้สอบให้ถูกต้อง"); return; }
+    if (!name) { alert("กรุณากรอกชื่อผู้สอบ"); return; }
+    state.email = email;
+    state.name = name;
+    state.answers = {};
+    state.startTime = Date.now();
+    renderTest();
+    window.scrollTo(0, 0);
+  });
+}
+
+function renderTest() {
+  let currentPart = null;
+  const questionsHtml = QUESTIONS.map((q) => {
+    let partHeader = "";
+    if (q.part !== currentPart) {
+      currentPart = q.part;
+      partHeader = `<h2 style="margin-top:28px">${PARTS.find((p) => p.id === q.part).name}</h2>`;
+    }
+    const optionsHtml = Object.entries(q.options).map(([key, text]) => `
+      <label class="option">
+        <input type="radio" name="q${q.n}" value="${key}" ${state.answers[q.n] === key ? "checked" : ""}>
+        <strong>${key})</strong> ${escapeHtml(text)}
+      </label>`).join("");
+    return `
+      ${partHeader}
+      <div class="question" id="q${q.n}">
+        <p><span class="q-num">ข้อ ${q.n}.</span>${escapeHtml(q.text)}</p>
+        ${q.code ? `<pre><code>${escapeHtml(q.code)}</code></pre>` : ""}
+        ${optionsHtml}
+      </div>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div class="card">
+      <p class="muted">ผู้สอบ: ${escapeHtml(state.name)} (${escapeHtml(state.email)}) · ${TOTAL} ข้อ · เวลาที่แนะนำ 30 นาที (ระบบไม่บังคับเวลา)</p>
+    </div>
+    ${questionsHtml}
+    <div class="sticky-bar">
+      <button id="submit-btn">ส่งข้อสอบ</button>
+      <button class="secondary" id="cancel-btn">ยกเลิก</button>
+      <span class="progress-text" id="progress-text">ตอบแล้ว 0/${TOTAL} ข้อ</span>
+    </div>
+  `;
+
+  document.querySelectorAll('input[type="radio"]').forEach((el) => {
+    el.addEventListener("change", () => {
+      state.answers[el.name.slice(1)] = el.value;
+      document.getElementById("progress-text").textContent =
+        `ตอบแล้ว ${Object.keys(state.answers).length}/${TOTAL} ข้อ`;
+    });
+  });
+
+  document.getElementById("submit-btn").addEventListener("click", () => {
+    const unanswered = TOTAL - Object.keys(state.answers).length;
+    if (unanswered > 0 && !confirm(`ยังไม่ได้ตอบ ${unanswered} ข้อ (จะนับเป็นผิด) — ต้องการส่งเลยไหม?`)) return;
+    submitTest();
+  });
+
+  document.getElementById("cancel-btn").addEventListener("click", () => {
+    if (confirm("ยกเลิกการสอบครั้งนี้? คำตอบจะไม่ถูกบันทึก")) renderGate();
+  });
+}
+
+function submitTest() {
+  const partScores = { 1: 0, 2: 0, 3: 0 };
+  const partFull = { 1: 0, 2: 0, 3: 0 };
+  let total = 0;
+
+  QUESTIONS.forEach((q) => {
+    partFull[q.part]++;
+    if (state.answers[q.n] === q.answer) { partScores[q.part]++; total++; }
+  });
+
+  const minutesUsed = Math.max(1, Math.round((Date.now() - state.startTime) / 60000));
+  const group = getPreTestGroup(total, partScores[1], partScores[2], partScores[3]);
+
+  const result = {
+    date: new Date().toISOString(),
+    email: state.email,
+    name: state.name,
+    testId: "pretest",
+    testTitle: "Pre-Test",
+    total,
+    full: TOTAL,
+    partScores,
+    partFull,
+    outcome: group.label,
+    outcomeColor: group.color,
+    minutesUsed,
+  };
+  saveResult(result);
+  state.lastResult = { ...result, group };
+  renderResult();
+  window.scrollTo(0, 0);
+}
+
+function renderResult() {
+  const r = state.lastResult;
+  const pct = Math.round((r.total / r.full) * 100);
+
+  const partRows = PARTS.map((p) => `
+    <tr>
+      <td>${p.name}</td>
+      <td>${r.partScores[p.id]}/${p.full}</td>
+      <td style="width:40%"><div class="part-bar"><div style="width:${(r.partScores[p.id] / p.full) * 100}%"></div></div></td>
+    </tr>`).join("");
+
+  const toAttend = COURSE_CHAPTERS.slice(r.group.startChapterIndex - 1);
+  const chaptersCard = `
+    <div class="card" style="border-left: 5px solid ${r.group.color}">
+      <h2>บทที่ต้องเข้าเรียน (${toAttend.length} บท)</h2>
+      <p>ด้วยคะแนน <strong>${r.total}/${r.full}</strong> คุณอยู่กลุ่ม <strong>${r.group.label}</strong> — เริ่มเรียนตั้งแต่${r.group.startChapter} ดังนี้:</p>
+      <ul>${toAttend.map((c) => `<li>${escapeHtml(c)}</li>`).join("")}</ul>
+      ${r.group.startChapterIndex > 1 ? '<p class="muted">หมายเหตุ: สามารถเข้าร่วม Workshop ของบทก่อนหน้าได้ตามความสนใจ แต่ไม่บังคับ</p>' : ""}
+    </div>`;
+
+  const reviewHtml = QUESTIONS.map((q) => {
+    const picked = state.answers[q.n];
+    const isCorrect = picked === q.answer;
+    const optionsHtml = Object.entries(q.options).map(([key, text]) => {
+      let cls = "", mark = "";
+      if (key === q.answer) { cls = "answer-right"; mark = " ✓ เฉลย"; }
+      else if (key === picked) { cls = "answer-picked-wrong"; mark = " ✗ คำตอบของคุณ"; }
+      return `<div class="option ${cls}"><strong>${key})</strong> ${escapeHtml(text)}${mark}</div>`;
+    }).join("");
+    return `
+      <div class="question ${isCorrect ? "correct" : "wrong"}">
+        <p><span class="q-num">ข้อ ${q.n}.</span>${escapeHtml(q.text)}</p>
+        ${q.code ? `<pre><code>${escapeHtml(q.code)}</code></pre>` : ""}
+        ${optionsHtml}
+      </div>`;
+  }).join("");
+
+  app.innerHTML = `
+    <div class="result-banner" style="background:${r.group.color}">
+      <div class="label">Pre-Test — ${r.group.label}</div>
+      <div class="score">${r.total}/${r.full} (${pct}%)</div>
+      <p>เริ่มเรียนตั้งแต่ ${r.group.startChapter} — ${r.group.desc}</p>
+      <p>ผู้สอบ: ${escapeHtml(r.name)} (${escapeHtml(r.email)}) · ใช้เวลา ${r.minutesUsed} นาที</p>
+      <p style="opacity:0.85">ผลสอบถูกบันทึกใน browser นี้แล้ว — กลับมาใหม่แล้วกรอก email เดิมเพื่อดูประวัติได้</p>
+    </div>
+
+    <div class="btn-row no-print">
+      <button id="print-btn">พิมพ์ผลสอบ / บันทึกเป็น PDF</button>
+      <button class="secondary" id="restart-btn">สอบใหม่</button>
+    </div>
+
+    ${chaptersCard}
+
+    <div class="card">
+      <h2>คะแนนแยกส่วน</h2>
+      <table>
+        <thead><tr><th>ส่วน</th><th>คะแนน</th><th></th></tr></thead>
+        <tbody>${partRows}</tbody>
+      </table>
+    </div>
+
+    <div class="review-section">
+      <h2>ทบทวนคำตอบ <span class="muted" style="font-size:0.6em;font-weight:400">(แสดงเฉพาะบนหน้าจอ ไม่รวมใน PDF)</span></h2>
+      ${reviewHtml}
+    </div>
+
+    <div class="btn-row no-print" style="margin-bottom:40px">
+      <button id="print-btn-2">พิมพ์ผลสอบ / บันทึกเป็น PDF</button>
+      <button class="secondary" id="restart-btn-2">สอบใหม่</button>
+    </div>
+  `;
+
+  document.getElementById("print-btn").addEventListener("click", () => window.print());
+  document.getElementById("print-btn-2").addEventListener("click", () => window.print());
+  document.getElementById("restart-btn").addEventListener("click", renderGate);
+  document.getElementById("restart-btn-2").addEventListener("click", renderGate);
+}
+
+renderGate();
+</script>
+</body>
+</html>
